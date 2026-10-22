@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="2_player"]
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 1
@@ -8,6 +9,20 @@ background_color = Color(0.035, 0.045, 0.07, 1)
 ambient_light_source = 3
 ambient_light_color = Color(0.65, 0.72, 0.9, 1)
 ambient_light_energy = 0.7
+
+[sub_resource type="BoxShape3D" id="FloorShape"]
+size = Vector3(40, 0.5, 40)
+
+[sub_resource type="BoxMesh" id="FloorMesh"]
+size = Vector3(40, 0.5, 40)
+
+[sub_resource type="CapsuleShape3D" id="PlayerShape"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="PlayerMesh"]
+radius = 0.4
+height = 1.8
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_main")
@@ -48,10 +63,10 @@ fov = 85.0
 [node name="Info" type="Label" parent="UI"]
 offset_left = 18.0
 offset_top = 18.0
-offset_right = 650.0
-offset_bottom = 90.0
-theme_override_font_sizes/font_size = 22
-text = "PERSIAN FPS  |  WASD حرکت  •  ماوس نگاه  •  کلیک شلیک  •  Esc آزاد کردن ماوس"
+offset_right = 950.0
+offset_bottom = 60.0
+theme_override_font_sizes/font_size = 20
+text = "PERSIAN FPS  |  WASD: حرکت  •  ماوس: نگاه  •  کلیک چپ: شلیک  •  Space: پرش  •  R: خشاب"
 
 [node name="Crosshair" type="Label" parent="UI"]
 anchors_preset = 8
@@ -75,17 +90,3 @@ offset_right = 420.0
 offset_bottom = 700.0
 theme_override_font_sizes/font_size = 22
 text = "سلامتی: 100   |   مهمات: 30"
-
-[sub_resource type="BoxShape3D" id="FloorShape"]
-size = Vector3(40, 0.5, 40)
-
-[sub_resource type="BoxMesh" id="FloorMesh"]
-size = Vector3(40, 0.5, 40)
-
-[sub_resource type="CapsuleShape3D" id="PlayerShape"]
-radius = 0.4
-height = 1.8
-
-[sub_resource type="CapsuleMesh" id="PlayerMesh"]
-radius = 0.4
-height = 1.8
