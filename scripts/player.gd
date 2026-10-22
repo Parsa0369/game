@@ -47,8 +47,6 @@ func _setup_view_model() -> void:
 	var packed = load(view_model_path)
 	if packed is PackedScene:
 		view_model = (packed as PackedScene).instantiate()
-	elif packed is PackedScene:
-		view_model = (packed as PackedScene).instantiate()
 	else:
 		# Imported .glb files are normally PackedScenes in Godot 4.
 		push_warning("Could not load view model as a scene: " + view_model_path)
