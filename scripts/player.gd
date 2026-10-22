@@ -7,6 +7,10 @@ extends CharacterBody3D
 @export var jump_velocity: float = 4.5
 @export var max_health: int = 100
 @export var ammo: int = 30
+@export var view_model_path: String = "res://assets/models/AK47.glb"
+@export var view_model_position: Vector3 = Vector3(0.32, -0.28, -0.62)
+@export var view_model_rotation_degrees: Vector3 = Vector3(0.0, 90.0, 0.0)
+@export var view_model_scale: Vector3 = Vector3(0.35, 0.35, 0.35)
 
 var health: int = 100
 var gravity: float = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
@@ -18,10 +22,40 @@ var slide_direction: Vector3 = Vector3.ZERO
 @onready var head: Node3D = $Head
 @onready var body_shape: CollisionShape3D = $CollisionShape3D
 @onready var status_label: Label = get_node_or_null("/root/Main/UI/Status")
+@onready var camera: Camera3D = $Head/Camera3D
+var view_model: Node3D
 
 func _ready() -> void:
 	health = max_health
+	_setup_view_model()
 	_update_status()
+
+
+func _setup_view_model() -> void:
+	# Attach the imported GLB to the camera so it stays in view while looking around.
+	var holder := Node3D.new()
+	holder.name = "ItemHolder"
+	holder.position = view_model_position
+	holder.rotation_degrees = view_model_rotation_degrees
+	holder.scale = view_model_scale
+	camera.add_child(holder)
+
+	if not ResourceLoader.exists(view_model_path):
+		push_warning("View model not found at: " + view_model_path + ". Put AK47.glb in res://assets/models/.")
+		return
+
+	var packed = load(view_model_path)
+	if packed is PackedScene:
+		view_model = (packed as PackedScene).instantiate()
+	elif packed is PackedScene:
+		view_model = (packed as PackedScene).instantiate()
+	else:
+		# Imported .glb files are normally PackedScenes in Godot 4.
+		push_warning("Could not load view model as a scene: " + view_model_path)
+		return
+
+	view_model.name = "AK47Model"
+	holder.add_child(view_model)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -91,7 +125,6 @@ func _shoot() -> void:
 	if ammo <= 0:
 		return
 	ammo -= 1
-	var camera: Camera3D = head.get_node("Camera3D")
 	var from := camera.global_position
 	var to := from + (-camera.global_transform.basis.z * 100.0)
 	var query := PhysicsRayQueryParameters3D.create(from, to)
