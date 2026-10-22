@@ -8,9 +8,9 @@ extends CharacterBody3D
 @export var max_health: int = 100
 @export var ammo: int = 30
 @export var view_model_path: String = "res://assets/models/AK47.glb"
-@export var view_model_position: Vector3 = Vector3(0.42, -0.32, -0.78)
+@export var view_model_position: Vector3 = Vector3(0.48, -0.42, -0.85)
 @export var view_model_rotation_degrees: Vector3 = Vector3(0.0, 90.0, 0.0)
-@export var view_model_scale: Vector3 = Vector3(0.65, 0.65, 0.65)
+@export var view_model_scale: Vector3 = Vector3(0.85, 0.85, 0.85)
 
 var health: int = 100
 var gravity: float = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
