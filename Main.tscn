@@ -1,0 +1,91 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 1
+background_color = Color(0.035, 0.045, 0.07, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.65, 0.72, 0.9, 1)
+ambient_light_energy = 0.7
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation_degrees = Vector3(-55, -25, 0)
+light_energy = 1.4
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+position = Vector3(0, -0.25, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("FloorShape")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("FloorMesh")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+position = Vector3(0, 1, 5)
+script = ExtResource("2_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("PlayerShape")
+
+[node name="Head" type="Node3D" parent="Player"]
+position = Vector3(0, 0.6, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Player/Head"]
+current = true
+fov = 85.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Info" type="Label" parent="UI"]
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 650.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 22
+text = "PERSIAN FPS  |  WASD حرکت  •  ماوس نگاه  •  کلیک شلیک  •  Esc آزاد کردن ماوس"
+
+[node name="Crosshair" type="Label" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -18.0
+offset_right = 12.0
+offset_bottom = 18.0
+theme_override_font_sizes/font_size = 30
+text = "+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Status" type="Label" parent="UI"]
+offset_left = 18.0
+offset_top = 650.0
+offset_right = 420.0
+offset_bottom = 700.0
+theme_override_font_sizes/font_size = 22
+text = "سلامتی: 100   |   مهمات: 30"
+
+[sub_resource type="BoxShape3D" id="FloorShape"]
+size = Vector3(40, 0.5, 40)
+
+[sub_resource type="BoxMesh" id="FloorMesh"]
+size = Vector3(40, 0.5, 40)
+
+[sub_resource type="CapsuleShape3D" id="PlayerShape"]
+radius = 0.4
+height = 1.8
+
+[sub_resource type="CapsuleMesh" id="PlayerMesh"]
+radius = 0.4
+height = 1.8
