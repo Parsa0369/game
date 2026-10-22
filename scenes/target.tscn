@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/target.gd" id="1_target"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape_target"]
+radius = 0.55
+height = 2.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_target"]
+radius = 0.55
+height = 2.0
+
+[node name="Target" type="StaticBody3D"]
+script = ExtResource("1_target")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape_target")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_target")
